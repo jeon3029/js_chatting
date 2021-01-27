@@ -10,6 +10,8 @@ const http = require('http')
 /* Node.js 기본 내장 모듈 불러오기 */
 const fs = require('fs')
 
+
+
 /* express 객체 생성 */
 const app = express()
 
@@ -19,8 +21,12 @@ const server = http.createServer(app)
 /* 생성된 서버를 socket.io에 바인딩 */
 const io = socket(server)
 
+
+
 app.use('/css', express.static('./static/css'))
 app.use('/js', express.static('./static/js'))
+
+
 
 /* Get 방식으로 / 경로에 접속하면 실행 됨 */
 app.get('/', function(request, response) {

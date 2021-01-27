@@ -8,14 +8,66 @@
     <script src="/js/index.js"></script>
   </head>
   <body>
-    <div id="main">
-      <div id="chat">
-        <!-- 채팅 메시지 영역 -->
-      </div>
-      <div>
-        <input type="text" id="test" placeholder="메시지를 입력해주세요..">
-        <button onclick="send()">전송</button>
-      </div>
+    <section>
+      <nav>
+        접속자 목록<br>
+        <ul>
+          <li>test1</li>
+          <li>test2</li>
+          <li>test3</li>
+        </ul>
+      </nav>
+      <article id="main">
+        <div id="chat">
+          <!-- 채팅 메시지 영역 -->
+        </div>
+        <div>
+          <input type="text" id="test" placeholder="메시지를 입력해주세요.."/>
+          <button onclick="send()">전송</button>
+        </div>
+      </article>
+      <nav>
+        광고
+        <br>
+        <a href="https://netflix.com">Netflix</a> 절찬리 방영중
+        <ul>
+          <li>블랙미러</li>
+          <li>킹덤</li>
+          <li>릭앤모티</li>
+        </ul>
+      </nav>
+    </section>
+    <div class="prompt">
+      <form class="prompt__form">
+        <p class="prompt__text"><p>
+        <input type="text" class="prompt__input" />
+        <button type="submit" class="prompt__submit">확인</button>
+      </form>  
     </div>
   </body>
+  <script>
+    var showPrompt = (function(){
+      var promptEl = document.querySelector('.prompt'),
+        _cb = null;
+      var prompt = {
+        el: promptEl,
+        form: promptEl.querySelector('.prompt__form'),
+        text: promptEl.querySelector('.prompt__text'),
+        input: promptEl.querySelector('.prompt__input'),
+        submit: promptEl.querySelector('.prompt__submit')
+      }
+      prompt.form.addEventListener('submit', hide, false);
+      function show( text, cb ){
+        prompt.el.classList.add('prompt--show');
+        prompt.text.innerHTML = text;
+        _cb = cb;
+      }
+      function hide( e ){
+        e.preventDefault();
+        prompt.el.classList.remove('prompt--show');
+        _cb.call( prompt, prompt.input.value );
+      }
+      return show;
+    })();
+  </script>
 </html>

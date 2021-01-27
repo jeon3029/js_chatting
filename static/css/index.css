@@ -1,12 +1,33 @@
 /* 메인 */
 #main {
   margin: auto;
-  margin-top: 100px;
-  border-radius: 20px;
-  background-color: lightblue;
+/*  margin-top: 50px;*/
+  border-radius: 1px;
+  background-color:#b6c2bd ;
   text-align: center;
-  width: 500px;
+/*  width: 50%;*/
   height: 800px;
+  float: left;
+}
+nav{
+  width:20%;
+  padding:40px;
+  float: left;
+}
+nav ul{
+/*  list-style-type: none;*/
+  margin-left: 0px;
+}
+article{
+  float: left;
+  padding: 20px;
+  width: 60%;
+}
+@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
 }
 
 /* 채팅 영역 */
@@ -15,12 +36,16 @@
   width: 100%;
   overflow-y: auto;
 }
-
+section::after {
+  content: "";
+  display: table;
+  clear: both;
+}
 /* 접속 알림 */
 .connect {
   width: 90%;
   margin: auto;
-  background-color: aquamarine;
+  background-color: #8fa5c7;
   text-align: center;
   margin-top: 10px;
 }
@@ -29,7 +54,7 @@
 .disconnect {
   width: 90%;
   margin: auto;
-  background-color: indianred;
+  background-color: #d69fc4;
   text-align: center;
   margin-top: 10px;
 }
@@ -38,7 +63,7 @@
 .me {
   width: 90%;
   margin: auto;
-  background-color: lemonchiffon;
+  background-color: #edc5de;
   border-radius: 5px;
   margin-top: 10px;
 }
@@ -50,4 +75,60 @@
   background-color: white;
   border-radius: 5px;
   margin-top: 10px;
+}
+
+
+
+/*프롬프트 디자인*/
+* {
+  box-sizing: border-box;
+}
+
+.prompt {
+  /* make the backgronud full screen */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(20,40,40,.27);
+  
+  /* make it show on top of all other elements */
+  z-index: 999;
+  
+  /* hide the prompt by default */
+  visibility: hidden;
+  opacity: 0;
+  
+  transition: .6s opacity, .6s visibility;
+}
+
+.prompt__form {
+  /* center the prompt window */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate( -50%, -50% );
+  width: 400px;
+  padding: 1em;
+  
+  background: #eeeeee;
+}
+
+.prompt--show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.prompt__input {
+  width: 60%;
+/*  height : 60px;*/
+  float: left;
+}
+
+.prompt__submit {
+  width: 15%;
+/*  height: 60px;*/
+  margin-left: 20px;
+  float: left;
 }

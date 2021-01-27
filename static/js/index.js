@@ -1,17 +1,25 @@
 var socket = io()
 
 /* 접속 되었을 때 실행 */
-socket.on('connect', function() {
+socket.on('connect',  function () {
   /* 이름을 입력받고 */
-  var name = prompt('반갑습니다!', '')
-
+//  var name;
+//  = prompt('반갑습니다!\n닉네임을 설정해 주세요', '')
+  this.name=  showPrompt('반갑습니다!<br>닉네임을 설정해 주세요<br>(입력하지 않을 경우 익명)',async function( answer ){
+    this.name = await answer;
+   
+    if(this.name=='') {
+      this.name = '익명'
+    }
+     console.log(this.name)
+    socket.emit('newUser', this.name)
+   
+    return answer
+  });
   /* 이름이 빈칸인 경우 */
-  if(!name) {
-    name = '익명'
-  }
-
+  
+//  console.log(this.name)
   /* 서버에 새로운 유저가 왔다고 알림 */
-  socket.emit('newUser', name)
 })
 
 /* 서버로부터 데이터 받은 경우 */
@@ -40,6 +48,7 @@ socket.on('update', function(data) {
   message.classList.add(className)
   message.appendChild(node)
   chat.appendChild(message)
+  chat.scrollTop = chat.scrollHeight;
 })
 
 /* 메시지 전송 함수 */
@@ -57,7 +66,16 @@ function send() {
   msg.classList.add('me')
   msg.appendChild(node)
   chat.appendChild(msg)
+  chat.scrollTop = chat.scrollHeight;
 
   // 서버로 message 이벤트 전달 + 데이터와 함께
   socket.emit('message', {type: 'message', message: message})
+}
+window.onload=function(){
+  var input = document.getElementById('test')
+  test.addEventListener("keyup",function(event){
+    if(event.keyCode==13){
+      send();
+    }
+  })
 }

@@ -50,6 +50,14 @@ section::after {
   margin-top: 10px;
 }
 
+.lastword {
+  width: 90%;
+  margin: auto;
+  background-color: #cedecc;
+  text-align: center;
+  margin-top: 10px;
+}
+
 /* 접속 종료 알림 */
 .disconnect {
   width: 90%;

@@ -11,7 +11,7 @@ socket.on('connect',  function () {
     if(this.name=='') {
       this.name = '익명'
     }
-     console.log(this.name)
+    console.log(this.name)
     socket.emit('newUser', this.name)
    
     return answer
@@ -43,14 +43,19 @@ socket.on('update', function(data) {
     case 'disconnect':
       className = 'disconnect'
       break
+    case 'lastword_start':
+      lastword_start();
+      className='connect'
+      break;  
   }
-
   message.classList.add(className)
   message.appendChild(node)
   chat.appendChild(message)
   chat.scrollTop = chat.scrollHeight;
 })
-
+function lastword_start(){
+  console.log('last start')
+}
 /* 메시지 전송 함수 */
 function send() {
   // 입력되어있는 데이터 가져오기
@@ -58,18 +63,29 @@ function send() {
   
   // 가져왔으니 데이터 빈칸으로 변경
   document.getElementById('test').value = ''
-
-  // 내가 전송할 메시지 클라이언트에게 표시
+  
   var chat = document.getElementById('chat')
   var msg = document.createElement('div')
-  var node = document.createTextNode(message)
-  msg.classList.add('me')
-  msg.appendChild(node)
-  chat.appendChild(msg)
-  chat.scrollTop = chat.scrollHeight;
-
-  // 서버로 message 이벤트 전달 + 데이터와 함께
-  socket.emit('message', {type: 'message', message: message})
+  
+  if(message=='/lastword'){
+    message = "끝말잇기가 시작되었습니다."
+    msg.classList.add('lastword')
+    var node = document.createTextNode(message)
+    msg.appendChild(node)
+    chat.appendChild(msg)
+    chat.scrollTop = chat.scrollHeight;
+    socket.emit('message', {type: 'lastword_start', message: message}) 
+  }
+  else{
+    // 내가 전송할 메시지 클라이언트에게 표시
+    msg.classList.add('me')
+    var node = document.createTextNode(message)
+    msg.appendChild(node)
+    chat.appendChild(msg)
+    chat.scrollTop = chat.scrollHeight;
+    // 서버로 message 이벤트 전달 + 데이터와 함께
+    socket.emit('message', {type: 'message', message: message})  
+  }
 }
 window.onload=function(){
   var input = document.getElementById('test')

@@ -34,7 +34,7 @@ app.get('/', function(request, response) {
     }
   })
 })
-var user_list=[];
+
 io.sockets.on('connection', function(socket) {
 
   /* 새로운 유저가 접속했을 경우 다른 소켓에게도 알려줌 */
@@ -43,10 +43,9 @@ io.sockets.on('connection', function(socket) {
 
     /* 소켓에 이름 저장해두기 */
     socket.name = name
-    user_list.push(name);
+
     /* 모든 소켓에게 전송 */
     io.sockets.emit('update', {type: 'connect', name: 'SERVER', message: name + '님이 접속하였습니다.'})
-      console.log("user list : ",user_list);
   })
 
   /* 전송한 메시지 받기 */
@@ -55,7 +54,7 @@ io.sockets.on('connection', function(socket) {
     data.name = socket.name
     
     console.log(data)
-    
+
     /* 보낸 사람을 제외한 나머지 유저에게 메시지 전송 */
     socket.broadcast.emit('update', data);
   })
@@ -66,18 +65,10 @@ io.sockets.on('connection', function(socket) {
 
     /* 나가는 사람을 제외한 나머지 유저에게 메시지 전송 */
     socket.broadcast.emit('update', {type: 'disconnect', name: 'SERVER', message: socket.name + '님이 나가셨습니다.'});
-    for(var i=0;i<user_list.length;i++){
-        if(user_list[i] == socket.name){
-            user_list.splice(i,1);
-            break;
-        }
-    }
-    console.log('user_list : ',user_list);
   })
 })
 
 /* 서버를 8080 포트로 listen */
-server.listen(8080, function() {
+server.listen(8000, function() {
   console.log('서버 실행 중..')
 })
-

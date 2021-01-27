@@ -14,27 +14,8 @@
   height: 90%;
   width: 100%;
   overflow-y: auto;
-  text-align:left;
-  font-size:5.0em;
 }
 
-section{
-  display: -webkit-flex;
-  display: flex;
-}
-nav{
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  padding: 20px;
-}
-article {
-  -webkit-flex: 3;
-  -ms-flex: 3;
-  flex: 3;
- 
-  padding: 10px;
-}
 /* 접속 알림 */
 .connect {
   width: 90%;

@@ -6,7 +6,6 @@ socket.on('connect', function() {
   var name = prompt('반갑습니다!', '')
 
   /* 이름이 빈칸인 경우 */
-  // TODO : 익명 1,2,3 ...
   if(!name) {
     name = '익명'
   }
@@ -41,9 +40,6 @@ socket.on('update', function(data) {
   message.classList.add(className)
   message.appendChild(node)
   chat.appendChild(message)
-  var left = document.getElementById('left_nav');
-  left.innerHTML = user_list;
-    
 })
 
 /* 메시지 전송 함수 */
@@ -57,7 +53,7 @@ function send() {
   // 내가 전송할 메시지 클라이언트에게 표시
   var chat = document.getElementById('chat')
   var msg = document.createElement('div')
-  var node = document.createTextNode('Me : ' + message)
+  var node = document.createTextNode(message)
   msg.classList.add('me')
   msg.appendChild(node)
   chat.appendChild(msg)

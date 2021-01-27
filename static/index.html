@@ -8,24 +8,14 @@
     <script src="/js/index.js"></script>
   </head>
   <body>
-      <section>
-      <nav >
-          <h3 id = "left_nav">
-          </h3>
-      </nav>
-      <article>
-        <div id="main">
-          <div id="chat">
-            <!-- 채팅 메시지 영역 -->
-          </div>
-            <!--입력창-->
-          <form method="send()">
-            <input type="text" id="test" placeholder="메시지를 입력해주세요.."/>
-            <input type="submit" value="전송">
-          </form>
-        </div>
-      </article>
-          </section>
-      
+    <div id="main">
+      <div id="chat">
+        <!-- 채팅 메시지 영역 -->
+      </div>
+      <div>
+        <input type="text" id="test" placeholder="메시지를 입력해주세요..">
+        <button onclick="send()">전송</button>
+      </div>
+    </div>
   </body>
 </html>

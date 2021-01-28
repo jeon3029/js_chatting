@@ -153,3 +153,41 @@ section::after {
   margin-left: 20px;
   float: left;
 }
+
+/*애니메이션 타이머*/
+
+.base-timer {
+  position: relative;
+  height: 200px;
+  width: 200px;
+}
+
+/* Removes SVG styling that would hide the time label */
+.base-timer__circle {
+  fill: none;
+  stroke: none;
+}
+
+/* The SVG path that displays the timer's progress */
+.base-timer__path-elapsed {
+  stroke-width: 4px;
+  stroke: grey;
+}
+.base-timer__label {
+  position: absolute;
+  
+  /* Size should match the parent container */
+  width: 200px;
+  height: 200px;
+  
+  /* Keep the label aligned to the top */
+  top: 0;
+  
+  /* Create a flexible box that centers content vertically and horizontally */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Sort of an arbitrary number; adjust to your liking */
+  font-size: 48px;
+}

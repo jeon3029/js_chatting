@@ -58,6 +58,20 @@ socket.on('update', function(data) {
   chat.appendChild(message)
   chat.scrollTop = chat.scrollHeight;
 })
+const TIME_LIMIT = 20;
+let timePassed = 0;
+let timeLeft = TIME_LIMIT;
+let timerInterval = null;
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    // The amount of time passed increments by one
+    timePassed = timePassed += 1;
+    timeLeft = TIME_LIMIT - timePassed;
+    // The time left label is updated
+    document.getElementById("base-timer-label").innerHTML = formatTimeLeft(timeLeft);
+  }, 1000);
+}
 function lastword_start(){
   console.log('last start')
   var last = document.getElementById('lastword')
@@ -66,17 +80,44 @@ function lastword_start(){
   //show element
   last.style.visibility="visible"
   last.style.opacity=1
-  sec.style.visibility="visible"
-  sec.style.opacity=1  
   
-  //set timer
-  
-  
-  //
+  //set timer  
+  document.getElementById("app").innerHTML = `
+  <div class="base-timer">
+    <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <g class="base-timer__circle">
+        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+      </g>
+    </svg>
+    <span id="base-timer-label" class="base-timer__label">
+    </span>
+  </div>
+  `
+  startTimer();
 }
+
+function formatTimeLeft(time) {
+  // The largest round integer less than or equal to the result of time divided being by 60.
+  if (time<0){
+    time=0;
+  }
+  const minutes = Math.floor(time / 60);
+  // Seconds are the remainder of the time divided by 60 (modulus operator)
+  let seconds = time % 60;
+  // If the value of seconds is less than 10, then display seconds with a leading zero
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
+  // The output in MM:SS format
+  return `${minutes}:${seconds}`;
+}
+
 function lastword_end(){
   console.log('last start')
 }
+
+
+
 /* 메시지 전송 함수 */
 function send() {
   // 입력되어있는 데이터 가져오기

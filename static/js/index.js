@@ -2,27 +2,30 @@ var socket = io()
 
 /* 접속 되었을 때 실행 */
 socket.on('connect',  function () {
-  /* 이름을 입력받고 */
-//  var name;
-//  = prompt('반갑습니다!\n닉네임을 설정해 주세요', '')
   showPrompt('반갑습니다!<br>닉네임을 설정해 주세요<br>(입력하지 않을 경우 익명)',
+    
     async function( answer ){
       this.name = await answer;
-
+      
+      /* 이름이 빈칸인 경우 */
       if(this.name=='') {
         this.name = '익명'
       }
       console.log(this.name)
+      /* 서버에 새로운 유저가 왔다고 알림 */
       socket.emit('newUser', this.name)
-
       return answer
     });
-  /* 이름이 빈칸인 경우 */
-  
-//  console.log(this.name)
-  /* 서버에 새로운 유저가 왔다고 알림 */
 })
-
+function update_userlist(){
+  var userlist = document.getElementById('userlist')
+  var inner = ''
+  for(var i=0;i<client_userlist.length;i++){
+    inner += '<li>' + client_userlist[i]+'</li>'
+  }
+  userlist.innerHTML=inner
+}
+var client_userlist=[]
 /* 서버로부터 데이터 받은 경우 */
 socket.on('update', function(data) {
   var chat = document.getElementById('chat')
@@ -32,6 +35,8 @@ socket.on('update', function(data) {
   var className = ''
 
   // 타입에 따라 적용할 클래스를 다르게 지정
+  client_userlist = data.users;
+  update_userlist();
   switch(data.type) {
     case 'message':
       className = 'other'

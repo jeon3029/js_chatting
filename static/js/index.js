@@ -207,7 +207,15 @@ function lastword_end(){
   last.style.opacity=0
   clearInterval(timerInterval)
 }
-
+function show_hello(){
+  var last = document.getElementById('hello')
+  last.style.visibility="visible"
+  last.style.opacity=1
+  setTimeout(function(){
+    last.style.visibility="hidden"
+    last.style.opacity=0
+  },2000)
+}
 let last_status = 0;
 /* 메시지 전송 함수 */
 function send() {
@@ -245,6 +253,9 @@ function send() {
     lastword_end();
     // emit to socket mode changed
     socket.emit('message', {type: 'lastword_end', message: message}) 
+  }
+  else if(message=="/hello"){
+    show_hello();
   }
   else{
     // 내가 전송할 메시지 클라이언트에게 표시

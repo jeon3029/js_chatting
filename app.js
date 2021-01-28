@@ -25,7 +25,7 @@ const io = socket(server)
 
 app.use('/css', express.static('./static/css'))
 app.use('/js', express.static('./static/js'))
-
+app.use('/images',express.static('./static/images'))
 
 
 /* Get 방식으로 / 경로에 접속하면 실행 됨 */

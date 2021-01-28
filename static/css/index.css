@@ -99,6 +99,26 @@ section::after {
   visibility: hidden;
   transition: .6s opacity, .6s visibility;
 }
+/*히든 영역*/
+#hello{
+  visibility: hidden;
+  opacity: 0;
+  transition: 2s opacity, 2s visibility;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+#hello__image
+{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate( -50%, -50% );
+/*  width: 400px;*/
+  padding: 1em;
+}
 
 /*프롬프트 디자인*/
 * {

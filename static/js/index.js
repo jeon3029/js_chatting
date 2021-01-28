@@ -35,8 +35,10 @@ socket.on('update', function(data) {
   switch(data.type) {
     case 'message':
       className = 'other'
+      if(last_status==1){
+        timePassed=0;
+      }
       break
-
     case 'connect':
       className = 'connect'
       break
@@ -46,11 +48,11 @@ socket.on('update', function(data) {
       break
     case 'lastword_start':
       lastword_start();
-      className='connect'
+      className='lastword'
       break;  
     case 'lastword_end':
       lastword_end();
-      className='connect'
+      className='lastword'
       break;
   }
   message.classList.add(className)
@@ -92,14 +94,14 @@ function startTimer() {
     setCircleDasharray();
     setRemainingPathColor(timeLeft);
   }, 1000);
+  
 }
 
 function lastword_start(){
+  
   console.log('last start')
-  var last = document.getElementById('lastword')
-  var sec = document.getElementById('seconds')
-  var loser = document.getElementById('loser')
   //show element
+  var last = document.getElementById('lastword')
   last.style.visibility="visible"
   last.style.opacity=1
   
@@ -126,6 +128,8 @@ function lastword_start(){
     </span>
   </div>
   `
+  last_status = 1;
+  timePassed=0;
   startTimer();
 }
 
@@ -161,7 +165,18 @@ function setRemainingPathColor(timeLeft) {
   console.log("set remain")
   const { alert, warning, info } = COLOR_CODES;
   // If the remaining time is less than or equal to 5, remove the "warning" class and apply the "alert" class.
-  if (timeLeft <= alert.threshold) {
+  if(timeLeft>warning.threshold){
+    document
+      .getElementById("base-timer-path-remaining")
+      .classList.remove(warning.color);
+    document
+      .getElementById("base-timer-path-remaining")
+      .classList.remove(alert.color);
+    document
+      .getElementById("base-timer-path-remaining")
+      .classList.add(info.color);
+  }
+  else if (timeLeft <= alert.threshold) {
 //    console.log('warning');
     document
       .getElementById("base-timer-path-remaining")
@@ -183,8 +198,17 @@ function setRemainingPathColor(timeLeft) {
   }
 }
 function lastword_end(){
-  console.log('last start')
+  console.log('last end')
+  last_status = 0;
+  timePassed=timeLeft+1;
+  //remove element
+  var last = document.getElementById('lastword')
+  last.style.visibility="hidden"
+  last.style.opacity=0
+  clearInterval(timerInterval)
 }
+
+let last_status = 0;
 /* 메시지 전송 함수 */
 function send() {
   // 입력되어있는 데이터 가져오기
@@ -198,9 +222,9 @@ function send() {
   
   if(message=='/lastword'){
     message = "끝말잇기가 시작되었습니다."
-    
     // print message
     msg.classList.add('lastword')
+    
     var node = document.createTextNode(message)
     msg.appendChild(node)
     chat.appendChild(msg)
@@ -209,8 +233,24 @@ function send() {
     // emit to socket mode changed
     socket.emit('message', {type: 'lastword_start', message: message}) 
   }
+  else if(message=='/quit'){
+    message = "끝말잇기가 종료되었습니다."
+    last_status=0;
+    // print message
+    msg.classList.add('lastword')
+    var node = document.createTextNode(message)
+    msg.appendChild(node)
+    chat.appendChild(msg)
+    chat.scrollTop = chat.scrollHeight;
+    lastword_end();
+    // emit to socket mode changed
+    socket.emit('message', {type: 'lastword_end', message: message}) 
+  }
   else{
     // 내가 전송할 메시지 클라이언트에게 표시
+    if(last_status==1){
+      timePassed=0;
+    }
     msg.classList.add('me')
     var node = document.createTextNode(message)
     msg.appendChild(node)

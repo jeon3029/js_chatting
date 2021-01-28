@@ -84,8 +84,21 @@ section::after {
   border-radius: 5px;
   margin-top: 10px;
 }
-
-
+#lastword{
+  opacity: 0;
+  visibility: hidden;
+  transition: .6s opacity, .6s visibility;
+}
+#seconds{
+  opacity: 0;
+  visibility: hidden;
+  transition: .6s opacity, .6s visibility;
+}
+#loser{
+  opacity: 0;
+  visibility: hidden;
+  transition: .6s opacity, .6s visibility;
+}
 
 /*프롬프트 디자인*/
 * {

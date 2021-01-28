@@ -5,17 +5,18 @@ socket.on('connect',  function () {
   /* 이름을 입력받고 */
 //  var name;
 //  = prompt('반갑습니다!\n닉네임을 설정해 주세요', '')
-  this.name=  showPrompt('반갑습니다!<br>닉네임을 설정해 주세요<br>(입력하지 않을 경우 익명)',async function( answer ){
-    this.name = await answer;
-   
-    if(this.name=='') {
-      this.name = '익명'
-    }
-    console.log(this.name)
-    socket.emit('newUser', this.name)
-   
-    return answer
-  });
+  showPrompt('반갑습니다!<br>닉네임을 설정해 주세요<br>(입력하지 않을 경우 익명)',
+    async function( answer ){
+      this.name = await answer;
+
+      if(this.name=='') {
+        this.name = '익명'
+      }
+      console.log(this.name)
+      socket.emit('newUser', this.name)
+
+      return answer
+    });
   /* 이름이 빈칸인 경우 */
   
 //  console.log(this.name)
@@ -47,6 +48,10 @@ socket.on('update', function(data) {
       lastword_start();
       className='connect'
       break;  
+    case 'lastword_end':
+      lastword_end();
+      className='connect'
+      break;
   }
   message.classList.add(className)
   message.appendChild(node)
@@ -54,6 +59,22 @@ socket.on('update', function(data) {
   chat.scrollTop = chat.scrollHeight;
 })
 function lastword_start(){
+  console.log('last start')
+  var last = document.getElementById('lastword')
+  var sec = document.getElementById('seconds')
+  var loser = document.getElementById('loser')
+  //show element
+  last.style.visibility="visible"
+  last.style.opacity=1
+  sec.style.visibility="visible"
+  sec.style.opacity=1  
+  
+  //set timer
+  
+  
+  //
+}
+function lastword_end(){
   console.log('last start')
 }
 /* 메시지 전송 함수 */
@@ -69,11 +90,15 @@ function send() {
   
   if(message=='/lastword'){
     message = "끝말잇기가 시작되었습니다."
+    
+    // print message
     msg.classList.add('lastword')
     var node = document.createTextNode(message)
     msg.appendChild(node)
     chat.appendChild(msg)
     chat.scrollTop = chat.scrollHeight;
+    lastword_start();
+    // emit to socket mode changed
     socket.emit('message', {type: 'lastword_start', message: message}) 
   }
   else{

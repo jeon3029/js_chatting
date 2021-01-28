@@ -20,20 +20,24 @@
         </div>
         <div id="lastword">
           <h2>끝말잇기</h2><br>
-          <p>남은시간 : </p>
-          <p id="seconds"></p>초
-          <h3>
-            <p>
-            *** 
-            님이 <br>승리하였습니다.</p>
-          </h3>
+          <div id="seconds">
+            <p>남은시간 : </p>
+            <p id="seconds-count"></p>초
+          </div>
+          <div id="loser">
+            <h3>
+              <p id="loser-name"></p>
+              <p style="color:red;">
+              님이 <br>패배하였습니다.</p>
+            </h3>
+          </div>
         </div>
       </nav>
       <article id="main">
         <div id="chat">
           <!-- 채팅 메시지 영역 -->
         </div>
-        <div>asdasd
+        <div>
           <input type="text" id="test" placeholder="메시지를 입력해주세요.."/>
           <button onclick="send()">전송</button>
         </div>

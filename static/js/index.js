@@ -1,5 +1,5 @@
 var socket = io()
-
+var client_userlist=[]
 /* 접속 되었을 때 실행 */
 socket.on('connect',  function () {
   showPrompt('반갑습니다!<br>닉네임을 설정해 주세요<br>(입력하지 않을 경우 익명)',
@@ -25,7 +25,7 @@ function update_userlist(){
   }
   userlist.innerHTML=inner
 }
-var client_userlist=[]
+
 /* 서버로부터 데이터 받은 경우 */
 socket.on('update', function(data) {
   var chat = document.getElementById('chat')
@@ -35,8 +35,6 @@ socket.on('update', function(data) {
   var className = ''
 
   // 타입에 따라 적용할 클래스를 다르게 지정
-  client_userlist = data.users;
-  update_userlist();
   switch(data.type) {
     case 'message':
       className = 'other'
@@ -46,6 +44,8 @@ socket.on('update', function(data) {
       break
     case 'connect':
       className = 'connect'
+      client_userlist = data.users;
+      update_userlist();  
       break
 
     case 'disconnect':
